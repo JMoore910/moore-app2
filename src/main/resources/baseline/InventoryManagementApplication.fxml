@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="800.0" styleClass="anchor" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <stylesheets>
+      <URL value="@stylesheet1.css" />
+   </stylesheets>
+   <children>
+      <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0" prefWidth="798.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="57.0" prefWidth="600.0" spacing="25.0">
+               <children>
+                  <ImageView fitHeight="47.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@colorless.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="47.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@white.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="47.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@black.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" prefHeight="26.0" prefWidth="273.0" text="Spellbook Inventory">
+                     <font>
+                        <Font name="System Bold Italic" size="25.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="47.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@blue.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="47.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@red.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="47.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@green.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="136.0">
+               <children>
+                  <VBox alignment="BOTTOM_RIGHT" prefHeight="98.0" prefWidth="810.0">
+                     <opaqueInsets>
+                        <Insets bottom="5.0" />
+                     </opaqueInsets>
+                     <children>
+                        <HBox alignment="TOP_RIGHT" prefHeight="23.0" prefWidth="794.0">
+                           <children>
+                              <ImageView fitHeight="62.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@PW.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                           <padding>
+                              <Insets right="127.0" />
+                           </padding>
+                        </HBox>
+                        <Label fx:id="noteLabel" prefHeight="17.0" prefWidth="242.0" text="ERROR: THIS IS AN ERROR" textFill="RED" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <VBox prefHeight="381.0" prefWidth="742.0">
+               <children>
+                  <HBox alignment="BOTTOM_RIGHT" prefHeight="87.0" prefWidth="600.0" spacing="5.0">
+                     <children>
+                        <ComboBox fx:id="sortBox" prefWidth="150.0" promptText="Sort By..." />
+                        <Button fx:id="sortButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" text="Sort" />
+                        <Button fx:id="addButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Add" />
+                        <Button fx:id="removeButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Remove" />
+                        <Button fx:id="editButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="58.0" text="Edit" />
+                        <Button fx:id="clearButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="Clear" />
+                        <Button fx:id="searchButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Search" />
+                        <VBox prefHeight="87.0" prefWidth="234.0" spacing="5.0">
+                           <children>
+                              <TextField fx:id="nameField" promptText="name: &lt;item name&gt;" />
+                              <TextField fx:id="serialField" promptText="serial: &lt;A-XXX-XXX-XXX&gt;" />
+                              <TextField fx:id="valueField" promptText="value: &lt;XXX.XX&gt;" />
+                           </children>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="BOTTOM_RIGHT" prefHeight="285.0" prefWidth="794.0" spacing="25.0">
+                     <children>
+                        <Button fx:id="loadButton" mnemonicParsing="false" text="Load" />
+                        <Button fx:id="saveButton" mnemonicParsing="false" text="Save" />
+                        <TableView prefHeight="280.0" prefWidth="620.0">
+                          <columns>
+                            <TableColumn fx:id="nameColumn" prefWidth="275.0" text="Name" />
+                            <TableColumn fx:id="serialColumn" minWidth="0.0" prefWidth="193.0" text="Serial" />
+                              <TableColumn fx:id="valueColumn" prefWidth="87.0" text="Value" />
+                              <TableColumn fx:id="quantityColumn" prefWidth="64.0" text="Quantity" />
+                          </columns>
+                        </TableView>
+                     </children>
+                     <padding>
+                        <Insets right="10.0" top="5.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+            <Label text="COP3330 Fall 2021 Application Assignment 2" textFill="WHITE" />
+            <Label prefHeight="12.0" prefWidth="172.0" text="\@Copyright 2021 Jeanne Moore" textFill="WHITE" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
