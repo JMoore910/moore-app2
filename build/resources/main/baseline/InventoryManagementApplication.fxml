@@ -80,7 +80,7 @@
                               <Insets right="127.0" />
                            </padding>
                         </HBox>
-                        <Label fx:id="noteLabel" prefHeight="17.0" prefWidth="242.0" text="ERROR: THIS IS AN ERROR" textFill="RED" />
+                        <Label fx:id="noteLabel" prefHeight="17.0" prefWidth="242.0" text="ERROR" />
                      </children>
                   </VBox>
                </children>
@@ -100,7 +100,7 @@
                            <children>
                               <TextField fx:id="nameField" promptText="name: &lt;item name&gt;" />
                               <TextField fx:id="serialField" promptText="serial: &lt;A-XXX-XXX-XXX&gt;" />
-                              <TextField fx:id="valueField" promptText="value: &lt;XXX.XX&gt;" />
+                              <TextField fx:id="valueField" promptText="value: &lt;$XXX.XX&gt;" />
                            </children>
                         </VBox>
                      </children>
@@ -108,10 +108,20 @@
                         <Insets right="10.0" />
                      </padding>
                   </HBox>
-                  <HBox alignment="BOTTOM_RIGHT" prefHeight="285.0" prefWidth="794.0" spacing="25.0">
+                  <HBox alignment="BOTTOM_RIGHT" prefHeight="285.0" prefWidth="794.0" spacing="13.0">
                      <children>
-                        <Button fx:id="loadButton" mnemonicParsing="false" text="Load" />
-                        <Button fx:id="saveButton" mnemonicParsing="false" text="Save" />
+                        <VBox alignment="BOTTOM_RIGHT" prefHeight="280.0" prefWidth="155.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="147.0" text="File:" textFill="WHITE" />
+                              <HBox alignment="BOTTOM_RIGHT" prefHeight="33.0" prefWidth="155.0" spacing="14.0">
+                                 <children>
+                                    <Button fx:id="fileChooserButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="36.0" text="📁" />
+                                    <Button fx:id="loadButton" mnemonicParsing="false" text="Load" />
+                                    <Button fx:id="saveButton" mnemonicParsing="false" text="Save" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
                         <TableView prefHeight="280.0" prefWidth="620.0">
                           <columns>
                             <TableColumn fx:id="nameColumn" prefWidth="275.0" text="Name" />

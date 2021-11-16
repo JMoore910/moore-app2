@@ -1,0 +1,22 @@
+@startuml
+'/*
+' *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
+' *  Copyright 2021 Jeanne Moore
+' */
+
+file stylesheet1.css{
+}
+
+file InventoryManagementApplication.fxml {
+}
+
+class Inventory
+class InventoryItem
+class InventoryManagementApplication
+class FXMLController1
+class LoadInventory
+class SaveInventory
+class Formatter
+
+
+@enduml
