@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Inventory {
-    HashMap<String, InventoryItem> inventoryMap = new HashMap<>();
-    List<String> serials = new ArrayList<>();
+    private HashMap<String, InventoryItem> inventoryMap = new HashMap<>();
+    private List<String> serials = new ArrayList<>();
 
     //  Constructors
     public Inventory(HashMap<String, InventoryItem> inventoryMap, List<String> serials) {
@@ -31,7 +31,8 @@ public class Inventory {
     //      return inventoryMap;
 
 
-    //  Create a method: public boolean searchList(String serial)
+    //  Create a method: public boolean searchList(String serial, String name)
+    //
     //      return if the serials list contains the string input or not
 
 
@@ -65,19 +66,19 @@ public class Inventory {
     //      sort the serials list by the value of each item in map
 
 
-    //  Create a method: public boolean checkName(String nameStr)
+    //  Create a method: public boolean checkName(String nameCheck)
     //      If nameStr is less than 2 chars long or is greater than 256 chars, return false
     //          else return true
 
 
-    //  Create a method: public boolean checkSerial(String serialStr)
+    //  Create a method: public boolean checkSerial(String serialCheck)
     //      if the serialStr does not follow the format ("A-XXX-XXX-XXX")
     //      Where A is a letter and X is either a letter or a number,
     //          return false
     //      else return true
 
 
-    //  Create a method: public boolean checkValue(String valueStr)
+    //  Create a method: public boolean checkValue(String valueCheck)
     //      remove $ from valueStr
     //      if the valueStr follows the format of XXX.XX
     //          and the valueStr parsed to Double > 0

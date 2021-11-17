@@ -132,93 +132,65 @@ public class FXMLController1 implements Initializable {
     //      String value = valueField.getText()
     //      clear all three fields
     //      if checkName(name), checkSerial(serial), and checkValue(value) are true
-    //          if
-    //          call inventory.removeItem(new inventoryItem())
-    //          call inventory.addItem(new inventoryItem())
-    //
+    //          call inventory.addItem(new inventoryItem():
+    //          call resetTableView
     //      else
     //          noteLabel.setText("INPUT ERROR: Please follow the format specified")
-    //
-    //  /
 
 
     //  Create a method: @FXML void remove(ActionEvent event)
     //      check if an item was selected
-    //          if so, call inventory.remove(itemSerial)
+    //          if so, call inventory.remove(selecteditemSerial)
     //          call resetTableView
-    //
 
 
     //  Create a method: @FXML void edit(ActionEvent event)
-    //
-    //
-    //
-    //
-    //
-    //
-    //  /
+    //      String name = nameField.getText()
+    //      String serial = serialField.getText()
+    //      String value = valueField.getText()
+    //      clear all three fields
+    //      if checkName(name), checkSerial(serial), and checkValue(value) are true
+    //          get selected item
+    //          call inventory.removeItem(new inventoryItem())
+    //          call inventory.addItem(new inventoryItem())
+    //          call resetTableView
+    //      else
+    //          noteLabel.setText("INPUT ERROR: Please follow the format specified")
 
 
     //  Create a method: @FXML void clear(ActionEvent event)
-    //
-    //
-    //
-    //
-    //
-    //
-    //  /
+    //      inventory.clearList()
+    //      resetListView
 
 
     //  Create a method: @FXML void search(ActionEvent event)
-    //
-    //
-    //
-    //
-    //
-    //
-    //  /
+    //      String name = nameField.getText()
+    //      String serial = serialField.getText()
+    //      if (checkName(name) || checkSerial(serial))
+    //          inventory.searchList(serial, name);
 
 
     //  Create a method: @FXML void fileChooser(ActionEvent event)
-    //
-    //
-    //
-    //
-    //
-    //
-    //
+    //      FileChooser fileChooser = new FileChooser
+    //      choice = chosen file
 
 
     //  Create a method: @FXML void load(ActionEvent event)
-    //
-    //
-    //
-    //
-    //
-    //
-    //
+    //      if choice is not empty,
+    //          LoadInventory loader = new LoadInventory
+    //          loader.loadFile(choice)
 
 
     //  Create a method: @FXML void save(ActionEvent event)
-    //
-    //
-    //
-    //
-    //
-    //
-    //
+    //      if choice is not empty,
+    //          SaveInventory saver = new SaveInventory
+    //          saver.writeInventoryToFile(choice, inventory)
 
 
     //  other methods
 
     //  Create a method: @FXML void selectItem(MouseEvent event)
-    //
-    //
-    //
-    //
-    //
-    //
-    //
+    //      selectedItem = get SelectionMode for tableview
 
 
 
@@ -226,5 +198,6 @@ public class FXMLController1 implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
     }
 }

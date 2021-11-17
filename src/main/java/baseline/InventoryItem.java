@@ -6,10 +6,10 @@ package baseline;
  */
 
 public class InventoryItem {
-    String name;
-    String serialNumber;
-    double value;
-    int quantity;
+    private String name;
+    private String serialNumber;
+    private double value;
+    private int quantity;
 
     //  Constructor
     public InventoryItem(String name, String serialNumber, double value, int quantity ) {
@@ -31,8 +31,8 @@ public class InventoryItem {
         this.value = value;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void addQuantity() {
+        this.quantity ++;
     }
 
     public String getName() {
@@ -45,9 +45,5 @@ public class InventoryItem {
 
     public double getValue() {
         return value;
-    }
-
-    public int getQuantity() {
-        return quantity;
     }
 }

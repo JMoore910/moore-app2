@@ -10,8 +10,38 @@ file stylesheet1.css{
 file InventoryManagementApplication.fxml {
 }
 
-class Inventory
-class InventoryItem
+class Inventory {
+    -inventoryMap: HashMap<String, InventoryItem>
+    -serials: List<String>
+    +getSerials(): List<String>
+    +getMap(): HashMap<String, InventoryItem>
+    +searchList(String serial): boolean
+    +addItem(InventoryItem item): void
+    +removeItem(InventoryItem item): void
+    +clearList(): void
+    +sortByName(): void
+    +sortBySerial(): void
+    +sortByValue(): void
+    +checkName(String nameCheck): boolean
+    +checkSerial(String serialCheck): boolean
+    +checkValue(String valueCheck): boolean
+}
+
+class InventoryItem {
+    -name: String
+    -serialNumber: String
+    -value: double
+    -quantity: int
+    +setName(String name): void
+    +setSerialNumber(String serialNumber): void
+    +SetValue(double value)
+    +getName(): String
+    +getSerialNumber(): String
+    +getValue(): double
+    +getQuantity(): int
+    +addQuantity(): void
+}
+
 class InventoryManagementApplication
 class FXMLController1
 class LoadInventory
