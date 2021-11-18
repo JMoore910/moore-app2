@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="800.0" styleClass="anchor" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="800.0" styleClass="anchor" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="baseline.FXMLController1">
    <stylesheets>
       <URL value="@stylesheet1.css" />
    </stylesheets>
@@ -80,7 +80,7 @@
                               <Insets right="127.0" />
                            </padding>
                         </HBox>
-                        <Label fx:id="noteLabel" prefHeight="17.0" prefWidth="242.0" text="ERROR" />
+                        <Label fx:id="noteLabel" prefHeight="17.0" prefWidth="242.0" />
                      </children>
                   </VBox>
                </children>
@@ -90,12 +90,12 @@
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="87.0" prefWidth="600.0" spacing="5.0">
                      <children>
                         <ComboBox fx:id="sortBox" prefWidth="150.0" promptText="Sort By..." />
-                        <Button fx:id="sortButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" text="Sort" />
-                        <Button fx:id="addButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="55.0" text="Add" />
-                        <Button fx:id="removeButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Remove" />
-                        <Button fx:id="editButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="58.0" text="Edit" />
-                        <Button fx:id="clearButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="Clear" />
-                        <Button fx:id="searchButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Search" />
+                        <Button fx:id="sortButton" mnemonicParsing="false" onAction="#sort" prefHeight="25.0" prefWidth="63.0" text="Sort" />
+                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#add" prefHeight="25.0" prefWidth="55.0" text="Add" />
+                        <Button fx:id="removeButton" mnemonicParsing="false" onAction="#remove" prefHeight="25.0" prefWidth="64.0" text="Remove" />
+                        <Button fx:id="editButton" mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="58.0" text="Edit" />
+                        <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clear" prefHeight="25.0" prefWidth="56.0" text="Clear" />
+                        <Button fx:id="searchButton" mnemonicParsing="false" onAction="#search" prefHeight="25.0" prefWidth="60.0" text="Search" />
                         <VBox prefHeight="87.0" prefWidth="234.0" spacing="5.0">
                            <children>
                               <TextField fx:id="nameField" promptText="name: &lt;item name&gt;" />
@@ -112,22 +112,22 @@
                      <children>
                         <VBox alignment="BOTTOM_RIGHT" prefHeight="280.0" prefWidth="155.0">
                            <children>
-                              <Label prefHeight="17.0" prefWidth="147.0" text="File:" textFill="WHITE" />
+                              <Label fx:id="fileLabel" prefHeight="17.0" prefWidth="147.0" text="File:" textFill="WHITE" />
                               <HBox alignment="BOTTOM_RIGHT" prefHeight="33.0" prefWidth="155.0" spacing="14.0">
                                  <children>
-                                    <Button fx:id="fileChooserButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="36.0" text="📁" />
-                                    <Button fx:id="loadButton" mnemonicParsing="false" text="Load" />
-                                    <Button fx:id="saveButton" mnemonicParsing="false" text="Save" />
+                                    <Button fx:id="fileChooserButton" mnemonicParsing="false" onAction="#fileChooser" prefHeight="26.0" prefWidth="36.0" text="📁" />
+                                    <Button fx:id="loadButton" mnemonicParsing="false" onAction="#load" text="Load" />
+                                    <Button fx:id="saveButton" mnemonicParsing="false" onAction="#save" text="Save" />
                                  </children>
                               </HBox>
                            </children>
                         </VBox>
-                        <TableView prefHeight="280.0" prefWidth="620.0">
+                        <TableView fx:id="inventoryTable" prefHeight="280.0" prefWidth="620.0">
                           <columns>
-                            <TableColumn fx:id="nameColumn" prefWidth="275.0" text="Name" />
-                            <TableColumn fx:id="serialColumn" minWidth="0.0" prefWidth="193.0" text="Serial" />
-                              <TableColumn fx:id="valueColumn" prefWidth="87.0" text="Value" />
-                              <TableColumn fx:id="quantityColumn" prefWidth="64.0" text="Quantity" />
+                            <TableColumn fx:id="nameColumn" prefWidth="259.0" text="Name" />
+                            <TableColumn fx:id="serialColumn" minWidth="0.0" prefWidth="187.0" text="Serial" />
+                              <TableColumn fx:id="valueColumn" prefWidth="92.0" text="Value" />
+                              <TableColumn fx:id="quantityColumn" prefWidth="65.0" text="Quantity" />
                           </columns>
                         </TableView>
                      </children>

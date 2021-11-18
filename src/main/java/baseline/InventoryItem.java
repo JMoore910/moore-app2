@@ -8,11 +8,11 @@ package baseline;
 public class InventoryItem {
     private String name;
     private String serialNumber;
-    private double value;
-    private int quantity;
+    private Double value;
+    private Integer quantity;
 
     //  Constructor
-    public InventoryItem(String name, String serialNumber, double value, int quantity ) {
+    public InventoryItem(String name, String serialNumber, Double value, Integer quantity ) {
         this.name = name;
         this.serialNumber = serialNumber;
         this.value = value;
@@ -45,5 +45,9 @@ public class InventoryItem {
 
     public double getValue() {
         return value;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 }
