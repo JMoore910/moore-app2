@@ -5,6 +5,10 @@ package baseline;
  *  Copyright 2021 Jeanne Moore
  */
 
+
+import com.google.gson.*;
+
+
 public class LoadInventory {
     //  Class loads an inventory from file
     //  file can be of the format:
@@ -20,17 +24,19 @@ public class LoadInventory {
     //          return loadHTML(fileName) if html
 
 
-    //  Create a method: public Inventory loadTSV(String fileName)
-    //      create a new Inventory inventory
-    //      try: create a buffered reader and read in the whole file line by line
-    //          read the first line as input
-    //          enter a loop while the input is not null
-    //              split each line by tab and insert it as a list into a list of strings
-    //              ("item name---tab---item serial---tab---item value---tab---quantity")
-    //              inventory.addItem(new InventoryItem(list(0),list(1),parse Double list(2),parse Int list(3)))
-    //              read the next line
-    //      catch at IO exception
-    //      return inventory
+    //public Inventory loadTSV(String fileName) {
+       // Inventory inventory = new Inventory();
+        //      try: create a buffered reader and read in the whole file line by line
+        //try ()
+        //          read the first line as input
+        //          enter a loop while the input is not null
+        //              split each line by tab and insert it as a list into a list of strings
+        //              ("item name---tab---item serial---tab---item value---tab---quantity")
+        //              inventory.addItem(new InventoryItem(list(0),list(1),parse Double list(2),parse Int list(3)))
+        //              read the next line
+        //      catch at IO exception
+        //      return inventory
+   // }
 
 
     //  Create a method: public Inventory loadJSON(String fileName)

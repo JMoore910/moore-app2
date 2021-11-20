@@ -35,6 +35,10 @@ public class InventoryItem {
         this.quantity ++;
     }
 
+    public void subQuantity() {
+        this.quantity --;
+    }
+
     public String getName() {
         return name;
     }

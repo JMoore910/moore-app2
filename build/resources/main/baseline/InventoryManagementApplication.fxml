@@ -100,7 +100,7 @@
                            <children>
                               <TextField fx:id="nameField" promptText="name: &lt;item name&gt;" />
                               <TextField fx:id="serialField" promptText="serial: &lt;A-XXX-XXX-XXX&gt;" />
-                              <TextField fx:id="valueField" promptText="value: &lt;$XXX.XX&gt;" />
+                              <TextField fx:id="valueField" promptText="value: &lt;XXX.XX&gt;" />
                            </children>
                         </VBox>
                      </children>

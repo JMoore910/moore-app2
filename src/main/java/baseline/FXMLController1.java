@@ -31,23 +31,24 @@ import javafx.stage.FileChooser;
 
 
 public class FXMLController1 implements Initializable {
-    //  Declare and initialize vars
-    private final ObservableList<String> itemNames = FXCollections.observableArrayList();
-    private final ObservableList<String> itemSerials = FXCollections.observableArrayList();
-    private final ObservableList<String> itemValues = FXCollections.observableArrayList();
-    private final ObservableList<String> itemQuantities = FXCollections.observableArrayList();
-
     //  Declare an inventory that will be used by all methods
     //  this inventory is what is updated and changed, and its
     //  items are added to the columns of the tableview in the
     //  inventory management application
+
+    //  Encapsulates methods for adding inventory items to both a list of serials and a map of items
     Inventory inventory = new Inventory();
-    ObservableList<String> sorts = FXCollections.observableArrayList("sort by name","sort by serial","sort by value");
+
+    //  A list of sort options that is put into the sortBox
+    ObservableList<String> sorts = FXCollections.observableArrayList(
+            "sort by name",
+            "sort by serial",
+            "sort by value");
+
+    //  The list of items in the inventory: follows the order of the serials list encapsulated by inventory
     ObservableList<InventoryItem> initTable = FXCollections.observableArrayList();
 
-
     private File choice;
-    private int selectedIndex = 0;
 
     @FXML
     private ResourceBundle resources;
@@ -118,11 +119,6 @@ public class FXMLController1 implements Initializable {
     @FXML
     private TextField valueField;
 
-    /*
-        How to use table columns:
-        create an observable list of the item to make a column of containing all items in order
-        So nameCol will be created in a list and the same for each other
-     */
 
     //  Button Methods
 
@@ -131,24 +127,24 @@ public class FXMLController1 implements Initializable {
         //      Get dropdown sort option
         String sortOption = sortBox.getSelectionModel().getSelectedItem();
         int option = 0;
-        if (sortOption.equals("sort by name")) {
-            option = 0;
-        } else if (sortOption.equals("sort by serial")) {
+        if (sortOption.equals("sort by serial")) {
             option = 1;
         } else if (sortOption.equals("sort by value")) {
             option = 2;
         }
         switch (option) {
-            case 0 -> System.out.println("name sort");
+            case 0 -> inventory.sortByName();
 
             //              call inventory.sortName(inventory)
-            case 1 -> System.out.println("serial sort");
+            case 1 -> inventory.sortBySerial();
 
             //              call inventory.sortValue(inventory)
-            case 2 -> System.out.println("value sort");
+            case 2 -> inventory.sortByValue();
 
             //              call inventory.sortSerial(inventory)
+            default -> inventory.sortByName();
         }
+        resetTableList();
     }
 
 
@@ -161,25 +157,37 @@ public class FXMLController1 implements Initializable {
         serialField.clear();
         valueField.clear();
 
-        if (!((name.isEmpty()) || serial.isEmpty() || value.isEmpty())) {
-            initTable.add(new InventoryItem(name, serial, parseDouble(value), 1));
+        //  If an item is selected when add is clicked, increase its quantity
+        if (inventoryTable.getSelectionModel().getSelectedIndex() >= 0) {
+            inventory.addQuantity(inventoryTable.getSelectionModel().getSelectedItem());
+            resetTableList();
+            noteLabel.setText("Item has been added!");
+            return;
+        }
 
+        if (inventory.searchList(serial, name)) {
+            noteLabel.setText("INPUT ERROR: Serialnumber already exists");
+            return;
+        }
 
-            //      if checkName(name), checkSerial(serial), and checkValue(value) are true
-            //          call inventory.addItem(new inventoryItem():
-            //          call resetTableView
-            //      else
-            //          noteLabel.setText("INPUT ERROR: Please follow the format specified")
+        //  Check that the name, serial, and value are filled and meet format specifications
+        if ((!((name.isEmpty()) || serial.isEmpty() || value.isEmpty())) &&
+            ((inventory.checkName(name) && inventory.checkSerial(serial)) && inventory.checkValue(value))) {
+                inventory.addItem(new InventoryItem(name, serial, parseDouble(value), 1));
+                resetTableList();
+                noteLabel.setText("Item has been added!");
+            } else {
+            noteLabel.setText("INPUT ERROR: Please follow the format");
         }
     }
 
 
     @FXML void remove(ActionEvent event) {
-        //      check if an item was selected
-        //          if so, call inventory.remove(selecteditemSerial)
-        //          call resetTableView
+        //  check if an item was selected
         if (inventoryTable.getSelectionModel().getSelectedIndex() >= 0) {
-            initTable.remove(inventoryTable.getSelectionModel().getSelectedIndex());
+            inventory.removeItem(inventoryTable.getSelectionModel().getSelectedItem());
+            resetTableList();
+            noteLabel.setText("Item has been removed!");
         }
     }
 
@@ -192,26 +200,29 @@ public class FXMLController1 implements Initializable {
         serialField.clear();
         valueField.clear();
 
-        if (inventoryTable.getSelectionModel().getSelectedIndex() >= 0) {
+        //  Check that an item was selected, the fields are not empty, and the input is valid
+        if ((inventoryTable.getSelectionModel().getSelectedIndex() >= 0) &&
+                ((!((name.isEmpty()) || serial.isEmpty() || value.isEmpty())) &&
+                ((inventory.checkName(name) && inventory.checkSerial(serial)) && inventory.checkValue(value)))) {
             //  Edit basically does both a remove then add
             int tempQuan = inventoryTable.getSelectionModel().getSelectedItem().getQuantity();
-            initTable.remove(inventoryTable.getSelectionModel().getSelectedIndex());
-            initTable.add(new InventoryItem(name, serial, parseDouble(value), tempQuan));
+            inventory.editItem(inventoryTable.getSelectionModel().getSelectedItem().getSerialNumber(),
+                    new InventoryItem(name, serial, parseDouble(value), tempQuan));
 
-            //      if checkName(name), checkSerial(serial), and checkValue(value) are true
-            //          get selected item
-            //          call inventory.removeItem(new inventoryItem())
-            //          call inventory.addItem(new inventoryItem())
-            //          call resetTableView
-            //      else
-            //          noteLabel.setText("INPUT ERROR: Please follow the format specified")
+            //  Successfully edited item
+            noteLabel.setText("Item has been edited!");
+            resetTableList();
+
+        } else {
+            noteLabel.setText("INPUT ERROR: Please follow the format specified");
         }
     }
 
 
     @FXML void clear(ActionEvent event) {
+        //  Clears all items from all lists and the map
+        inventory.clearList();
         initTable.clear();
-        //      resetListView
     }
 
 
@@ -225,9 +236,6 @@ public class FXMLController1 implements Initializable {
                 inventoryTable.scrollTo(inventoryTable.getSelectionModel().getFocusedIndex());
             }
         }
-
-        //      if (checkName(name) || checkSerial(serial))
-        //          inventory.searchList(serial, name);
     }
 
 
@@ -264,6 +272,17 @@ public class FXMLController1 implements Initializable {
     }
 
 
+    //  Method to reset TableView list of items based on serials
+    @FXML void resetTableList(){
+        //  Clear the init table out and then add everything back into it
+        initTable.clear();
+        for (String i: inventory.getSerials()) {
+            System.out.println(i);
+            initTable.add(inventory.getMap().get(i));
+        }
+    }
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //  Initialize combo box items
@@ -271,14 +290,6 @@ public class FXMLController1 implements Initializable {
         sortBox.setItems(sorts);
         sortBox.getSelectionModel().select(0);
 
-
-        //  TEMPORARY FUNCTIONALITY: Adds an initialized list of inventory items
-        initTable.add(new InventoryItem("Jeanne", "A-112-B12-CCD", 120.12, 2));
-
-        for (int i = 0; i < 1024; i++) {
-            initTable.add(new InventoryItem("Item "+ i,(i%26 + 'A') + "-123-456-789",i*.5,i));
-
-        }
 
         //  Set the table's cell factories
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
