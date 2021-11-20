@@ -125,8 +125,8 @@
                         <TableView fx:id="inventoryTable" prefHeight="280.0" prefWidth="620.0">
                           <columns>
                             <TableColumn fx:id="nameColumn" prefWidth="259.0" text="Name" />
-                            <TableColumn fx:id="serialColumn" minWidth="0.0" prefWidth="187.0" text="Serial" />
-                              <TableColumn fx:id="valueColumn" prefWidth="92.0" text="Value" />
+                            <TableColumn fx:id="serialColumn" minWidth="0.0" prefWidth="140.0" text="Serial" />
+                              <TableColumn fx:id="valueColumn" prefWidth="139.0" text="Value" />
                               <TableColumn fx:id="quantityColumn" prefWidth="65.0" text="Quantity" />
                           </columns>
                         </TableView>
