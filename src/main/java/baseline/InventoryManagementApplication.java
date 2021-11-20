@@ -10,21 +10,18 @@ import java.util.Objects;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 
 public class InventoryManagementApplication extends javafx.application.Application {
-    public static Stage stage;
+
 
     @Override
-    public void start(Stage stagein) throws Exception {
+    public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("InventoryManagementApplication.fxml")));
 
-        this.stage = stagein;
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("stylesheet1.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("stylesheet1.css")).toExternalForm());
         stage.setTitle("Inventory Manager");
         stage.setScene(scene);
         stage.show();

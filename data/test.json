@@ -1,0 +1,8 @@
+{ "items" : [
+{"name": "Beans", "serial": "A-XX1-B12-123", "value": 10000.1, "quantity": 1},
+{"name": "Shoes", "serial": "C-123-456-789", "value": 900.1, "quantity": 2},
+{"name": "Tags", "serial": "A-AA2-B12-123", "value": 1111111.1, "quantity": 3},
+{"name": "Tares", "serial": "Z-XX1-B12-123", "value": 10000.1, "quantity": 1},
+{"name": "Tests", "serial": "X-XX1-B12-123", "value": 10000.1, "quantity": 1}
+]
+}

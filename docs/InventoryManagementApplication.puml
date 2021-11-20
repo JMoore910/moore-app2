@@ -10,14 +10,85 @@ file stylesheet1.css{
 file InventoryManagementApplication.fxml {
 }
 
+class InventoryManagementApplication {
+    extends javafx.application.Application
+    +start(Stage stage): void
+    +main(String[] args): void
+}
+
+
+class FXMLController1 {
+    inventory: Inventory
+    sorts: ObservableList<String>
+    initTable: ObservableList<InventoryItem>
+    -choice: File
+    -resources: ResourceBundle
+    -location: URL
+    -anchorPane: AnchorPane
+    -InventoryTable: TableView<InventoryItem>
+    -nameColumn: TableColumn<InventoryItem, String>
+    -serialColumn: TableColumn<InventoryItem, String>
+    -valueColumn: TableColumn<InventoryItem, Double>
+    -quantityColumn: TableColumn<InventoryItem, Integer>
+    -addButton: Button
+    -removeButton: Button
+    -editButton: Button
+    -searchButton: Button
+    -sortButton: Button
+    -clearButton: Button
+    -fileChooserButton: Button
+    -loadButton: Button
+    -saveButton: Button
+    -nameField: TextField
+    -serialField: TextField
+    -valueField: TextField
+    -sortBox: ComboBox<String>
+    -noteLabel: Label
+    -fileLabel: Label
+    sort(sortButton): void
+    add(sortButton): void
+    remove(removeButton): void
+    edit(editButton): void
+    clear(clearButton): void
+    search(searchButton): void
+    fileChooser(fileChooserButton): void
+    load(loadButton): void
+    save(saveButton): void
+    resetTableList(): void
+    initialize(URL location, ResourceBundle resources): void
+}
+
+
+class LoadInventory {
+    +loadFormat(String fileName): Inventory
+    +loadTSV(String fileName): Inventory
+    +loadJSON(String fileName): Inventory
+    +loadHTML(String fileName): Inventory
+    +readJsonFile(String fileName): JsonArray
+}
+
+
+class SaveInventory {
+    +saveFormat(String fileName, Inventory inventory): void
+    +getTSV(String fileName, Inventory inventory): List<StringBuilder>
+    +getHTML(String fileName, Inventory inventory): List<StringBuilder>
+    +getJSON(String fileName, Inventory inventory): List<StringBuilder>
+    +writeInventoryToFile(String fileName, List<StringBuilder> list): void
+
+
+}
+
+
 class Inventory {
-    -inventoryMap: HashMap<String, InventoryItem>
+    -inventoryMap: Map<String, InventoryItem>
     -serials: List<String>
     +getSerials(): List<String>
-    +getMap(): HashMap<String, InventoryItem>
+    +getMap(): Map<String, InventoryItem>
     +searchList(String serial): boolean
+    +addQuantity(InventoryItem item): void
     +addItem(InventoryItem item): void
     +removeItem(InventoryItem item): void
+    +editItem(String serial, InventoryItem item)
     +clearList(): void
     +sortByName(): void
     +sortBySerial(): void
@@ -32,21 +103,31 @@ class InventoryItem {
     -serialNumber: String
     -value: double
     -quantity: int
-    +setName(String name): void
-    +setSerialNumber(String serialNumber): void
-    +SetValue(double value)
+    +addQuantity(): void
+    +subQuantity(): void
     +getName(): String
     +getSerialNumber(): String
     +getValue(): double
     +getQuantity(): int
-    +addQuantity(): void
 }
 
-class InventoryManagementApplication
-class FXMLController1
-class LoadInventory
-class SaveInventory
-class Formatter
+
+
+InventoryManagementApplication --> InventoryManagementApplication.fxml
+InventoryManagementApplication --> stylesheet1.css
+
+InventoryManagementApplication.fxml --> FXMLController1
+FXMLController1 --> LoadInventory
+FXMLController1 --> SaveInventory
+FXMLController1 --> Inventory
+
+LoadInventory --> Inventory
+SaveInventory --> Inventory
+
+Inventory --> InventoryItem
+
+
+
 
 
 @enduml

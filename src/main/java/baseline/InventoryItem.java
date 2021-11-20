@@ -6,9 +6,10 @@ package baseline;
  */
 
 public class InventoryItem {
-    private String name;
-    private String serialNumber;
-    private Double value;
+    private final String name;
+    private final String serialNumber;
+    private final Double value;
+    private final String valueFormat;
     private Integer quantity;
 
     //  Constructor
@@ -17,18 +18,7 @@ public class InventoryItem {
         this.serialNumber = serialNumber;
         this.value = value;
         this.quantity = quantity;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSerialNumber(String serialNumber) {
-        this.serialNumber = serialNumber;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
+        this.valueFormat = String.format("$%.2f",value);
     }
 
     public void addQuantity() {
@@ -53,5 +43,9 @@ public class InventoryItem {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public String getValueFormat() {
+        return valueFormat;
     }
 }

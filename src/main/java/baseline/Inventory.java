@@ -90,11 +90,13 @@ public class Inventory {
 
     public void editItem(String serial, InventoryItem item) {
         //  Edit is effectively just removing and adding in one method
-        inventoryMap.remove(serial);
-        serials.remove(serial);
+        int i = inventoryMap.get(serial).getQuantity();
 
-        inventoryMap.put(item.getSerialNumber(),item);
-        serials.add(item.getSerialNumber());
+        for (int j = i; j > 0; j--) {
+            removeItem(inventoryMap.get(serial));
+        }
+
+        addItem(item);
     }
 
 

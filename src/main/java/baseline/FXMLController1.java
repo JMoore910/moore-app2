@@ -8,13 +8,8 @@ package baseline;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 
-import static java.lang.Integer.parseInt;
 import static java.lang.Double.parseDouble;
 
 import javafx.collections.FXCollections;
@@ -24,9 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 
@@ -60,33 +53,6 @@ public class FXMLController1 implements Initializable {
     private AnchorPane anchorPane;
 
     @FXML
-    private Button addButton;
-
-    @FXML
-    private Button clearButton;
-
-    @FXML
-    private Button editButton;
-
-    @FXML
-    private Button loadButton;
-
-    @FXML
-    private Button removeButton;
-
-    @FXML
-    private Button saveButton;
-
-    @FXML
-    private Button searchButton;
-
-    @FXML
-    private Button sortButton;
-
-    @FXML
-    private Button fileChooserButton;
-
-    @FXML
     private TableView<InventoryItem> inventoryTable;
 
     @FXML
@@ -96,19 +62,43 @@ public class FXMLController1 implements Initializable {
     private TableColumn<InventoryItem, String> serialColumn;
 
     @FXML
-    private TableColumn<InventoryItem, Double> valueColumn;
+    private TableColumn<InventoryItem, String> valueColumn;
 
     @FXML
     private TableColumn<InventoryItem, Integer> quantityColumn;
 
     @FXML
+    private Button addButton;
+
+    @FXML
+    private Button removeButton;
+
+    @FXML
+    private Button editButton;
+
+    @FXML
+    private Button searchButton;
+
+    @FXML
+    private Button sortButton;
+
+    @FXML
+    private Button clearButton;
+
+    @FXML
+    private Button fileChooserButton;
+
+    @FXML
+    private Button loadButton;
+
+    @FXML
+    private Button saveButton;
+
+    @FXML
     private TextField nameField;
 
     @FXML
-    private Label noteLabel;
-
-    @FXML
-    private Label fileLabel;
+    private TextField valueField;
 
     @FXML
     private TextField serialField;
@@ -117,7 +107,12 @@ public class FXMLController1 implements Initializable {
     private ComboBox<String> sortBox;
 
     @FXML
-    private TextField valueField;
+    private Label noteLabel;
+
+    @FXML
+    private Label fileLabel;
+
+
 
 
     //  Button Methods
@@ -172,8 +167,12 @@ public class FXMLController1 implements Initializable {
 
         //  Check that the name, serial, and value are filled and meet format specifications
         if ((!((name.isEmpty()) || serial.isEmpty() || value.isEmpty())) &&
-            ((inventory.checkName(name) && inventory.checkSerial(serial)) && inventory.checkValue(value))) {
-                inventory.addItem(new InventoryItem(name, serial, parseDouble(value), 1));
+                ((inventory.checkName(name) && inventory.checkSerial(serial)) && inventory.checkValue(value))) {
+                //  Value will need to be resized if it has more than 2 digits after the decimal
+                double temp = parseDouble(value);
+                temp = (Math.round(temp * 100)) / 100.0;
+
+                inventory.addItem(new InventoryItem(name, serial, temp, 1));
                 resetTableList();
                 noteLabel.setText("Item has been added!");
             } else {
@@ -204,10 +203,15 @@ public class FXMLController1 implements Initializable {
         if ((inventoryTable.getSelectionModel().getSelectedIndex() >= 0) &&
                 ((!((name.isEmpty()) || serial.isEmpty() || value.isEmpty())) &&
                 ((inventory.checkName(name) && inventory.checkSerial(serial)) && inventory.checkValue(value)))) {
+            //  Value will need to be resized if it has more than 2 digits after the decimal
+            double tempVal = parseDouble(value);
+            tempVal = (Math.round(tempVal * 100)) / 100.0;
+
+
             //  Edit basically does both a remove then add
             int tempQuan = inventoryTable.getSelectionModel().getSelectedItem().getQuantity();
             inventory.editItem(inventoryTable.getSelectionModel().getSelectedItem().getSerialNumber(),
-                    new InventoryItem(name, serial, parseDouble(value), tempQuan));
+                    new InventoryItem(name, serial, tempVal, tempQuan));
 
             //  Successfully edited item
             noteLabel.setText("Item has been edited!");
@@ -252,22 +256,25 @@ public class FXMLController1 implements Initializable {
     }
 
 
-    @FXML void load(ActionEvent event) {
-        if (choice.exists()) {
+    @FXML void load(ActionEvent event) throws IOException {
+        if (choice != null) {
+            //  Change label to notify user and load at the chosen file's absolute path
             fileLabel.setText("load " + choice.getName());
-            //      if choice is not empty,
-            //          LoadInventory loader = new LoadInventory
-            //          loader.loadFile(choice)
+            LoadInventory loader = new LoadInventory();
+            //  Inventory is assigned to the result of the load method
+            inventory = loader.loadFormat(choice.getAbsolutePath());
+            resetTableList();
         }
     }
 
 
     @FXML void save(ActionEvent event) {
-        if (choice.exists()) {
+        if (choice != null) {
+            //  Change label to notify user and save to the chosen file's absolute path
             fileLabel.setText("save to " + choice.getName());
-            //      if choice is not empty,
-            //          SaveInventory saver = new SaveInventory
-            //          saver.writeInventoryToFile(choice, inventory)
+            SaveInventory save = new SaveInventory();
+            //  Inventory is passed in to be saved
+            save.saveFormat(choice.getAbsolutePath(), inventory);
         }
     }
 
@@ -277,7 +284,6 @@ public class FXMLController1 implements Initializable {
         //  Clear the init table out and then add everything back into it
         initTable.clear();
         for (String i: inventory.getSerials()) {
-            System.out.println(i);
             initTable.add(inventory.getMap().get(i));
         }
     }
@@ -294,7 +300,7 @@ public class FXMLController1 implements Initializable {
         //  Set the table's cell factories
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         serialColumn.setCellValueFactory(new PropertyValueFactory<>("serialNumber"));
-        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+        valueColumn.setCellValueFactory(new PropertyValueFactory<>("valueFormat"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
         //  Set the table to be an observable list

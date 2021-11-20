@@ -72,7 +72,7 @@ public class SaveInventory {
         StringBuilder html;
 
         //  Append html headers to start
-        start.append("<html>\n<head>\n<title>\n\"Invenory\"")
+        start.append("<html>\n<head>\n<title>\n\"Inventory\"")
                 .append("\n</title>\n</head>\n<body>\n")
                 .append("<h2>Inventory List</h2>\n<ul>\n");
         list.add(start);
@@ -82,13 +82,15 @@ public class SaveInventory {
             html = new StringBuilder();
             html.append("<li>")
                     .append(inventory.getMap().get(item).getName())
-                    .append(":")
+                    .append("\t")
                     .append(inventory.getMap().get(item).getSerialNumber())
-                    .append(":")
+                    .append("\t")
                     .append(inventory.getMap().get(item).getValue())
-                    .append(":")
+                    .append("\t")
                     .append(inventory.getMap().get(item).getQuantity())
-                    .append("</li>");
+                    .append("</li>\n");
+            //  Add html to the list
+            list.add(html);
         }
         end.append("\n</ul>\n</body>\n</html>");
         list.add(end);
@@ -107,19 +109,19 @@ public class SaveInventory {
         //  Format like so for JSON files
         for (String item: inventory.getSerials()) {
             json = new StringBuilder();
-            json.append("{\"name\": ").append(inventory.getMap().get(item).getName())
-                    .append("\", \"serial\": ")
+            json.append("{\"name\": \"").append(inventory.getMap().get(item).getName())
+                    .append("\", \"serial\": \"")
                     .append(inventory.getMap().get(item).getSerialNumber())
                     .append("\", \"value\": ")
                     .append(inventory.getMap().get(item).getValue())
-                    .append("\", \"quantity\": ")
+                    .append(", \"quantity\": ")
                     .append(inventory.getMap().get(item).getQuantity())
                     .append("}");
             //  if the item is the last item in the list,
             if (inventory.getSerials().indexOf(item) == inventory.getSerials().size() - 1) {
                 json.append("\n]\n}");
             } else {
-                json.append(",");
+                json.append(",\n");
             }
             list.add(json);
             //  result is a list that when printed to file will be in json format
