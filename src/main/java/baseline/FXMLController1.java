@@ -122,6 +122,7 @@ public class FXMLController1 implements Initializable {
         //      Get dropdown sort option
         String sortOption = sortBox.getSelectionModel().getSelectedItem();
         int option = 0;
+        //  Option remains 0 if nameSort is selected
         if (sortOption.equals("sort by serial")) {
             option = 1;
         } else if (sortOption.equals("sort by value")) {
@@ -160,7 +161,9 @@ public class FXMLController1 implements Initializable {
             return;
         }
 
-        if (inventory.searchList(serial, name)) {
+        //  If the serial number entered already exists in the inventory,
+        //  do NOT add it
+        if (inventory.searchList(serial, "")) {
             noteLabel.setText("INPUT ERROR: Serialnumber already exists");
             return;
         }
@@ -169,10 +172,11 @@ public class FXMLController1 implements Initializable {
         if ((!((name.isEmpty()) || serial.isEmpty() || value.isEmpty())) &&
                 ((inventory.checkName(name) && inventory.checkSerial(serial)) && inventory.checkValue(value))) {
                 //  Value will need to be resized if it has more than 2 digits after the decimal
-                double temp = parseDouble(value);
-                temp = (Math.round(temp * 100)) / 100.0;
+                double tempVal = parseDouble(value);
+                tempVal = (Math.round(tempVal * 100)) / 100.0;
 
-                inventory.addItem(new InventoryItem(name, serial, temp, 1));
+                //  Add the item to inventory with the new formatted value
+                inventory.addItem(new InventoryItem(name, serial, tempVal, 1));
                 resetTableList();
                 noteLabel.setText("Item has been added!");
             } else {
@@ -184,6 +188,7 @@ public class FXMLController1 implements Initializable {
     @FXML void remove(ActionEvent event) {
         //  check if an item was selected
         if (inventoryTable.getSelectionModel().getSelectedIndex() >= 0) {
+            //  if so, remove it and reset the table view
             inventory.removeItem(inventoryTable.getSelectionModel().getSelectedItem());
             resetTableList();
             noteLabel.setText("Item has been removed!");
@@ -192,9 +197,12 @@ public class FXMLController1 implements Initializable {
 
 
     @FXML void edit(ActionEvent event) {
+        //  Get input from text fields
         String name = nameField.getText();
         String serial = serialField.getText();
         String value = valueField.getText();
+
+        //  Clear the text fields
         nameField.clear();
         serialField.clear();
         valueField.clear();
@@ -213,7 +221,7 @@ public class FXMLController1 implements Initializable {
             inventory.editItem(inventoryTable.getSelectionModel().getSelectedItem().getSerialNumber(),
                     new InventoryItem(name, serial, tempVal, tempQuan));
 
-            //  Successfully edited item
+            //  Successfully edited item, let the user know
             noteLabel.setText("Item has been edited!");
             resetTableList();
 
@@ -231,9 +239,12 @@ public class FXMLController1 implements Initializable {
 
 
     @FXML void search(ActionEvent event) {
+        //  Get name and serial from text fields
         String name = nameField.getText();
         String serial = serialField.getText();
 
+
+        //  Go through all items in the table and check if the name or serial matches what was input
         for (InventoryItem item: initTable){
             if ((item.getName().equals(name)) || (item.getSerialNumber().equals(serial))) {
                 inventoryTable.getSelectionModel().select(item);
@@ -244,12 +255,14 @@ public class FXMLController1 implements Initializable {
 
 
     @FXML void fileChooser(ActionEvent event) {
+        //  File chooser chooses a file, user can filter for text files as TSV, HTML files, and JSON files
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TSV Files","*.txt"));
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("HTML Files","*.html"));
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON Files","*.json"));
         choice = fileChooser.showOpenDialog(null);
 
+        //  if a file is chosen this way, notify the user
         if (choice != null) {
             fileLabel.setText("File: " + choice.getName());
         }

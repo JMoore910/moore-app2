@@ -80,7 +80,6 @@ public class Inventory {
         } else {
             //  If the quantity is still greater than 0,
             //  keep it in the list, just reset it to the map
-            //  USE THIS IF BELOW FAILS
             inventoryMap.remove(item.getSerialNumber());
             inventoryMap.put(item.getSerialNumber(), item);
         }
