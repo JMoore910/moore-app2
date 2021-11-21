@@ -207,6 +207,14 @@ public class FXMLController1 implements Initializable {
         serialField.clear();
         valueField.clear();
 
+        //  If the serial number entered already exists in the inventory,
+        //  do NOT add it
+        if (inventory.searchList(serial, "")) {
+            noteLabel.setText("INPUT ERROR: Serialnumber already exists");
+            return;
+        }
+
+
         //  Check that an item was selected, the fields are not empty, and the input is valid
         if ((inventoryTable.getSelectionModel().getSelectedIndex() >= 0) &&
                 ((!((name.isEmpty()) || serial.isEmpty() || value.isEmpty())) &&
