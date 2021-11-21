@@ -169,6 +169,8 @@ public class Inventory {
         //      Where A is a letter and X is either a letter or a number,
         //          return false
         //      else return true
+        //  Check that the serial number contains three hyphens
+        int lengthHyphen = serialCheck.length();
 
 
         serialCheck = serialCheck.replace("-","");
@@ -176,6 +178,12 @@ public class Inventory {
         if (serialCheck.length() != 10) {
             return false;
         }
+
+        if ((lengthHyphen - serialCheck.length() != 3 )) {
+            //  There were less than 3 hyphens
+            return false;
+        }
+
 
         //  Check that first char is upper case alphabetic
         if (!Character.isUpperCase(serialCheck.charAt(0))) {
